@@ -24,4 +24,20 @@ class Machine {
             _water = water;
         }
     }
+
+    bool isAvailable() {
+        return _coffeeBeans >= 50 && _milk >= 0 && _water >= 100;
+    }
+
+    void _subtractResources({ int coffeeBeans = 50, int milk = 0, int water = 100 }) {
+        _coffeeBeans -= coffeeBeans;
+        _milk -= milk;
+        _water -= water;
+    }
+
+    void makingCoffee() {
+        if (isAvailable()) {
+            _subtractResources();
+        }
+    }
 }
