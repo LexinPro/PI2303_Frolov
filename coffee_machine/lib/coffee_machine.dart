@@ -1,4 +1,11 @@
 import "./classes/Machine.dart";
+import "./classes/Enums.dart";
+import "./classes/Resources.dart";
+import "./classes/coffee/ICoffee.dart";
+import "./classes/coffee/Americano.dart";
+import "./classes/coffee/Cappuccino.dart";
+import "./classes/coffee/Espresso.dart";
+import "./classes/coffee/Latte.dart";
 
 import "dart:io";
 
@@ -9,7 +16,7 @@ void main() {
     bool running = true;
 
     print("Команды:");
-    print("1 - приготовить эспрессо");
+    print("1 - приготовить кофе");
     print("2 - добавить ресурсы");
     print("3 - выход");
 
@@ -19,32 +26,57 @@ void main() {
 
         switch (choice) {
             case '1':
-                if (machine.isAvailable()) {
-                    machine.makingCoffee();
-                    print("Эспрессо готов!");
+                print("1 - Эспрессо");
+                print("2 - Американо");
+                print("3 - Капуччино");
+                print("4 - Латте");
+                String? choiceCoffee = stdin.readLineSync();
+                ICoffee coffee = Espresso();
+                switch (choiceCoffee) {
+                    case '1':
+                        coffee = Espresso();
+                        break;
+
+                    case '2':
+                        coffee = Americano();
+                        break;
+
+                    case '3':
+                        coffee = Cappuccino();
+                        break;
+
+                    case '4':
+                        coffee = Latte();
+                        break;    
+                }
+                if (machine.isAvailable(coffee)) {
+                    machine.makeCoffeeByType(coffee);
+                    print("Кофе \"${coffee.name()}\" готов");
                 } else {
-                    print("Недостаточно ресурсов");
+                    Resources currentResources = machine.getCurrentResources();
+                    Resources needResources = machine.getNeedResources(coffee);
+                    print("Не хватило ресурсов для напитка \"${coffee.name()}\": ");
+                    print("- Кофейных зерен: ${currentResources.coffeeBeans}/${needResources.coffeeBeans} г");
+                    print("- Молока: ${currentResources.milk}/${needResources.milk} мл");
+                    print("- Воды: ${currentResources.water}/${needResources.water} мл");
                 }
                 break;
 
             case '2':
-                print("Добавляем ресурсы. Для отмены введите \"Выход\".");
+                print("Введите количество грамм кофейных зерен:");
+                int coffeeBeans = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
 
-                int coffeeBeans = machine.coffeeBeans;
-                print("Кофейные зерна (сейчас: ${coffeeBeans} гр):");
-                coffeeBeans += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.coffeeBeans = coffeeBeans;
+                print("Введите количество милилитров молока:");
+                int milk = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
 
-                int milk = machine.milk;
-                print("Молоко (сейчас: ${milk} мл):");
-                milk += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.milk = milk;
+                print("Введите количество милилитров воды:");
+                int water = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
 
-                int water = machine.water;
-                print("Вода (сейчас: ${water} мл):");
-                water += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.water = water;
-
+                machine.fillResources(Resources(
+                    coffeeBeans: coffeeBeans,
+                    milk: milk,
+                    water: water
+                ));
                 break;
             
             case '3':
