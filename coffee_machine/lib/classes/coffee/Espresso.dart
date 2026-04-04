@@ -3,6 +3,9 @@ import "./ICoffee.dart";
 
 class Espresso implements ICoffee {
     @override
+    String name() => "Эспрессо";
+
+    @override
     int coffeeBeans() => 50;
     
     @override
