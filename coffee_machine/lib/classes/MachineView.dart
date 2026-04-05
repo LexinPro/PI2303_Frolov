@@ -17,13 +17,13 @@ class MachineView {
     }
 
     void showResourcesForCoffee({
-        String coffeeName,
-        int currentCoffeeBeans,
-        int currentMilk,
-        int currentWater,
-        int needCoffeeBeans,
-        int needMilk,
-        int needWater
+        required String coffeeName,
+        required int currentCoffeeBeans,
+        required int currentMilk,
+        required int currentWater,
+        required int needCoffeeBeans,
+        required int needMilk,
+        required int needWater
     }) {
         print("Не хватило ресурсов для напитка \"${coffeeName}\": ");
         print("- Кофейные зерна: ${currentCoffeeBeans}/${needCoffeeBeans} г");
