@@ -1,6 +1,8 @@
+coffee_machine/.dart_tool/
 coffee_machine/bin/
 coffee_machine/test/
 coffee_machine/analysis_options.yaml
 coffee_machine/CHANGELOG.md
+coffee_machine/pubspec.lock
 coffee_machine/pubspec.yaml
 coffee_machine/README.md
