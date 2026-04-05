@@ -1,17 +1,32 @@
+import "./AsyncMethods.dart";
+import "./Machine.dart";
+import "./MachineView.dart";
+import "./Enums.dart";
+import "./Resources.dart";
+import "./coffee/ICoffee.dart";
+import "./coffee/Americano.dart";
+import "./coffee/Cappuccino.dart";
+import "./coffee/Espresso.dart";
+import "./coffee/Latte.dart";
+
+import "dart:io";
+
+
 class MachineController {
+    AsyncMethods process = AsyncMethods();
     Machine machine;
     MachineView view;
 
     MachineController(this.machine, this.view);
 
-    bool runWork() {
+    Future<bool> runWork() async {
         bool running = true;
         view.showCommandMenu();
         String? choice = stdin.readLineSync();
 
         switch (choice) {
         case '1':
-            _makeCoffee();
+            await _makeCoffee();
             break;
 
         case '2':
@@ -26,7 +41,7 @@ class MachineController {
         return running;
     }
 
-    void _makeCoffee() {
+    Future<void> _makeCoffee() async {
         view.showCoffeeMenu();
 
         String? choiceCoffee = stdin.readLineSync();
@@ -36,6 +51,7 @@ class MachineController {
 
         if (machine.isAvailable(coffee)) {
             machine.makeCoffeeByType(coffee);
+            await _processMakingCoffee(coffee.milk() > 0);
             view.printCoffeeIsReady(coffee.name());
         } else {
             Resources currentResources = machine.getCurrentResources();
@@ -68,6 +84,19 @@ class MachineController {
             case CoffeeType.americano: return Americano();
             case CoffeeType.cappuccino: return Cappuccino();
             case CoffeeType.latte: return Latte();
+        }
+    }
+
+    Future<void> _processMakingCoffee(bool withMilk) async {
+        await process.heatWater();
+        if (withMilk) {
+            await Future.wait([
+                process.brewCoffee(),
+                process.beatMilk()
+            ]);
+            await process.mix();
+        } else {
+            await process.brewCoffee();
         }
     }
 
