@@ -10,25 +10,24 @@ import "./classes/coffee/Latte.dart";
 import "dart:io";
 
 
-ICoffee selectTypeCoffee(String? choiceCoffee) {
+CoffeeType? parseCoffee(String? choiceCoffee) {
     switch (choiceCoffee) {
-    case '1':
-        return Espresso();
-        break;
-
-    case '2':
-        return Americano();
-        break;
-
-    case '3':
-        return Cappuccino();
-        break;
-
-    case '4':
-        return Latte();
-        break;    
+        case '1': return CoffeeType.espresso;
+        case '2': return CoffeeType.americano;
+        case '3': return CoffeeType.cappuccino;
+        case '4': return CoffeeType.latte;
     }
-    return Espresso();
+    return null;
+}
+
+
+ICoffee selectTypeCoffee(CoffeeType coffeeType) {
+    switch (coffeeType) {
+        case CoffeeType.espresso: return Espresso();
+        case CoffeeType.americano: return Americano();
+        case CoffeeType.cappuccino: return Cappuccino();
+        case CoffeeType.latte: return Latte();
+    }
 }
 
 
@@ -38,7 +37,9 @@ void makeCoffee(Machine machine) {
     print("3 - Капуччино");
     print("4 - Латте");
     String? choiceCoffee = stdin.readLineSync();
-    ICoffee coffee = selectTypeCoffee(choiceCoffee);
+    CoffeeType? coffeeType = parseCoffee(choiceCoffee);
+    if (coffeeType == null) return;
+    ICoffee coffee = selectTypeCoffee(coffeeType);
     if (machine.isAvailable(coffee)) {
         machine.makeCoffeeByType(coffee);
         print("Кофе \"${coffee.name()}\" готов");
