@@ -17,7 +17,12 @@ class Machine {
         _resources.cash += resources.cash;
     }
 
-    Resources getCurrentResources() => _resources;
+    Resources getCurrentResources() => Resources(
+        coffeeBeans: _resources.coffeeBeans,
+        milk: _resources.milk,
+        water: _resources.water,
+        cash: _resources.cash
+    );
 
     Resources getNeedResources(ICoffee coffee) {
         Resources resources = Resources(
@@ -36,7 +41,7 @@ class Machine {
     void _makeCoffee(ICoffee coffee) {
         _resources.coffeeBeans -= coffee.coffeeBeans();
         _resources.milk -= coffee.milk();
-        _resources.water -= coffee.milk();
+        _resources.water -= coffee.water();
     }
 
     void makeCoffeeByType(ICoffee coffee) {
