@@ -1,56 +1,108 @@
 import "./classes/Machine.dart";
+import "./classes/Enums.dart";
+import "./classes/Resources.dart";
+import "./classes/coffee/ICoffee.dart";
+import "./classes/coffee/Americano.dart";
+import "./classes/coffee/Cappuccino.dart";
+import "./classes/coffee/Espresso.dart";
+import "./classes/coffee/Latte.dart";
 
 import "dart:io";
 
 
-void main() {
-    Machine machine = Machine();
+CoffeeType? parseCoffee(String? choiceCoffee) {
+    switch (choiceCoffee) {
+        case '1': return CoffeeType.espresso;
+        case '2': return CoffeeType.americano;
+        case '3': return CoffeeType.cappuccino;
+        case '4': return CoffeeType.latte;
+    }
+    return null;
+}
 
+
+ICoffee selectTypeCoffee(CoffeeType coffeeType) {
+    switch (coffeeType) {
+        case CoffeeType.espresso: return Espresso();
+        case CoffeeType.americano: return Americano();
+        case CoffeeType.cappuccino: return Cappuccino();
+        case CoffeeType.latte: return Latte();
+    }
+}
+
+
+void makeCoffee(Machine machine) {
+    print("1 - Эспрессо");
+    print("2 - Американо");
+    print("3 - Капуччино");
+    print("4 - Латте");
+    String? choiceCoffee = stdin.readLineSync();
+    CoffeeType? coffeeType = parseCoffee(choiceCoffee);
+    if (coffeeType == null) return;
+    ICoffee coffee = selectTypeCoffee(coffeeType);
+    if (machine.isAvailable(coffee)) {
+        machine.makeCoffeeByType(coffee);
+        print("Кофе \"${coffee.name()}\" готов");
+    } else {
+        Resources currentResources = machine.getCurrentResources();
+        Resources needResources = machine.getNeedResources(coffee);
+        print("Не хватило ресурсов для напитка \"${coffee.name()}\": ");
+        print("- Кофейных зерен: ${currentResources.coffeeBeans}/${needResources.coffeeBeans} г");
+        print("- Молока: ${currentResources.milk}/${needResources.milk} мл");
+        print("- Воды: ${currentResources.water}/${needResources.water} мл");
+    }
+}
+
+
+void addResources(Machine machine) {
+    print("Введите количество грамм кофейных зерен:");
+    int coffeeBeans = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
+
+    print("Введите количество милилитров молока:");
+    int milk = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
+
+    print("Введите количество милилитров воды:");
+    int water = int.tryParse(stdin.readLineSync() ?? "") ?? 0;
+
+    machine.fillResources(Resources(
+        coffeeBeans: coffeeBeans,
+        milk: milk,
+        water: water
+    ));
+}
+
+
+bool runWork(Machine machine) {
     bool running = true;
-
     print("Команды:");
-    print("1 - приготовить эспрессо");
+    print("1 - приготовить кофе");
     print("2 - добавить ресурсы");
     print("3 - выход");
+    print("Введите команду: ");
+    String? choice = stdin.readLineSync();
 
+    switch (choice) {
+    case '1':
+        makeCoffee(machine);
+        break;
+
+    case '2':
+        addResources(machine);
+        break;
+    
+    case '3':
+        running = false;
+        break;
+    }
+    print("");
+    return running;
+}
+
+
+void main() {
+    Machine machine = Machine();
+    bool running = true;
     while (running) {
-        print("Введите команду: ");
-        String? choice = stdin.readLineSync();
-
-        switch (choice) {
-            case '1':
-                if (machine.isAvailable()) {
-                    machine.makingCoffee();
-                    print("Эспрессо готов!");
-                } else {
-                    print("Недостаточно ресурсов");
-                }
-                break;
-
-            case '2':
-                print("Добавляем ресурсы. Для отмены введите \"Выход\".");
-
-                int coffeeBeans = machine.coffeeBeans;
-                print("Кофейные зерна (сейчас: ${coffeeBeans} гр):");
-                coffeeBeans += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.coffeeBeans = coffeeBeans;
-
-                int milk = machine.milk;
-                print("Молоко (сейчас: ${milk} мл):");
-                milk += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.milk = milk;
-
-                int water = machine.water;
-                print("Вода (сейчас: ${water} мл):");
-                water += int.tryParse(stdin.readLineSync() ?? "") ?? 0;
-                machine.water = water;
-
-                break;
-            
-            case '3':
-                running = false;
-                break;
-        }
-        print("");
+        running = runWork(machine);
     }
 }

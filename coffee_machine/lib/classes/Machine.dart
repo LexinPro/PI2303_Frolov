@@ -1,47 +1,52 @@
+import "./Resources.dart";
+import "./coffee/ICoffee.dart";
+import "./coffee/Americano.dart";
+import "./coffee/Cappuccino.dart";
+import "./coffee/Espresso.dart";
+import "./coffee/Latte.dart";
+import "./Enums.dart";
+
+
 class Machine {
-    static const ESPRESSO_COFFEE_BEANS = 50;
-    static const ESPRESSO_MILK = 0;
-    static const ESPRESSO_WATER = 100;
+    Resources _resources = Resources();
 
-    int _coffeeBeans = 0;
-    int _milk = 0;
-    int _water = 0;
-
-    int get coffeeBeans => _coffeeBeans;
-    int get milk => _milk;
-    int get water => _water;
-
-    set coffeeBeans(int coffeeBeans) {
-        if (coffeeBeans >= 0) {
-            _coffeeBeans = coffeeBeans;
-        }
+    void fillResources(Resources resources) {
+        _resources.coffeeBeans += resources.coffeeBeans;
+        _resources.milk += resources.milk;
+        _resources.water += resources.water;
+        _resources.cash += resources.cash;
     }
 
-    set milk(int milk) {
-        if (milk >= 0) {
-            _milk = milk;
-        }
+    Resources getCurrentResources() => Resources(
+        coffeeBeans: _resources.coffeeBeans,
+        milk: _resources.milk,
+        water: _resources.water,
+        cash: _resources.cash
+    );
+
+    Resources getNeedResources(ICoffee coffee) {
+        Resources resources = Resources(
+            coffeeBeans: coffee.coffeeBeans(),
+            milk: coffee.milk(),
+            water: coffee.water(),
+            cash: coffee.cash()
+        );
+        return resources;
     }
 
-    set water(int water) {
-        if (water >= 0) {
-            _water = water;
-        }
+    bool isAvailable(ICoffee coffee) {
+        return _resources.coffeeBeans >= coffee.coffeeBeans() && _resources.milk >= coffee.milk() && _resources.water >= coffee.water();
     }
 
-    bool isAvailable() {
-        return _coffeeBeans >= ESPRESSO_COFFEE_BEANS && _milk >= ESPRESSO_MILK && _water >= ESPRESSO_WATER;
+    void _makeCoffee(ICoffee coffee) {
+        _resources.coffeeBeans -= coffee.coffeeBeans();
+        _resources.milk -= coffee.milk();
+        _resources.water -= coffee.water();
     }
 
-    void _subtractResources({ int coffeeBeans = ESPRESSO_COFFEE_BEANS, int milk = ESPRESSO_MILK, int water = ESPRESSO_WATER }) {
-        _coffeeBeans -= coffeeBeans;
-        _milk -= milk;
-        _water -= water;
-    }
-
-    void makingCoffee() {
-        if (isAvailable()) {
-            _subtractResources();
+    void makeCoffeeByType(ICoffee coffee) {
+        if (isAvailable(coffee)) {
+            _makeCoffee(coffee);
         }
     }
 }
