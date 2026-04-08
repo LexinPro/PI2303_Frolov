@@ -24,16 +24,6 @@ class Machine {
         cash: _resources.cash
     );
 
-    Resources getNeedResources(ICoffee coffee) {
-        Resources resources = Resources(
-            coffeeBeans: coffee.coffeeBeans(),
-            milk: coffee.milk(),
-            water: coffee.water(),
-            cash: coffee.cash()
-        );
-        return resources;
-    }
-
     bool isAvailable(ICoffee coffee) {
         return _resources.coffeeBeans >= coffee.coffeeBeans() && _resources.milk >= coffee.milk() && _resources.water >= coffee.water();
     }
