@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'widgets/tab_button.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -31,8 +33,16 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Color(0xFF795548),
           title: Text("Coffee Machine"),
           foregroundColor: Colors.white,
+          bottom: TabBar(
+            tabs: [
+              TabButton(fileName: "coffee-cup.png"),
+              TabButton(fileName: "delivery.png")
+            ],
+          ),
         ),
       )
     );
   }
 }
+
+
