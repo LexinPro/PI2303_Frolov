@@ -53,13 +53,45 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Row(
+              spacing: 5,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    fixedSize: Size(80, 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)
+                    )
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    fixedSize: Size(80, 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)
+                    )
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            TextButton(
+              child: Text(
+                "Сбросить",
+                style: TextStyle(
+                  color: Colors.grey
+                )
+              ),
+              onPressed: () {},
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
