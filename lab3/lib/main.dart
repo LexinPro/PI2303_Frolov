@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(5)
                     )
                   ),
-                  onPressed: () {},
+                  onPressed: _decrementCounter,
                 ),
                 IconButton(
                   icon: Icon(Icons.add),
@@ -89,18 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(5)
                     )
                   ),
-                  onPressed: () {},
+                  onPressed: _incrementCounter,
                 ),
               ],
             ),
             TextButton(
+              onPressed: _resetCounter,
               child: Text(
                 "Сбросить",
                 style: TextStyle(
                   color: Colors.grey
                 )
-              ),
-              onPressed: () {},
+              )
             )
           ],
         ),
