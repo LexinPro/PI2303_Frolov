@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:coffee_machine_mobile/services/Machine.dart';
 import 'package:coffee_machine_mobile/services/machine_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:coffee_machine_mobile/widgets/info_section.dart';
 import 'package:coffee_machine_mobile/screens/set_resources/screen_content_section.dart';
+import 'package:coffee_machine_mobile/screens/set_resources/fill_resources_container.dart';
 
 
 class SetResourcesScreen extends StatefulWidget {
@@ -30,7 +31,8 @@ class _SetResourcesScreen extends State<SetResourcesScreen> {
       children: [
         InfoSection( children: [
           ScreenContentSection(machine: controller.machine)
-        ])
+        ]),
+        FillResourcesContainer(machine: controller.machine, onUpdate: () {setState(() {});})
       ],
     );
   }

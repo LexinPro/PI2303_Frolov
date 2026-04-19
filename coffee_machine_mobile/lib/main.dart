@@ -7,7 +7,6 @@ import 'package:coffee_machine_mobile/services/Machine.dart';
 
 void main() {
   final machine = Machine();
-  machine.fillResources(coffeeBeans: 300);
 
   runApp(MyApp(machine: machine));
 }

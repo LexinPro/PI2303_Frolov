@@ -9,7 +9,7 @@ class CurrentMoney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Баланс: $cash",
+      "Баланс: $cash руб",
       style: TextStyle(
         color: Color(0xFF6D7052),
         fontSize: 20
