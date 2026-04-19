@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 
 
 class CurrentResources extends StatelessWidget {
-  const CurrentResources({super.key});
+  final int coffeeBeans;
+  final int milk;
+  final int water;
+  static Color textColor = Color(0xFF777F21);
+
+  const CurrentResources({super.key, this.coffeeBeans = 0, this.milk = 0, this.water = 0});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("Кофейные зерна: 250 гр", style: TextStyle(color: Color(0xFF777F21))),
-        Text("Молоко: 25 мл", style: TextStyle(color: Color(0xFF777F21))),
-        Text("Вода: 250 мл", style: TextStyle(color: Color(0xFF777F21)))
+        Text("Кофейные зерна: $coffeeBeans гр", style: TextStyle(color: textColor)),
+        Text("Молоко: $milk мл", style: TextStyle(color: textColor)),
+        Text("Вода: $water мл", style: TextStyle(color: textColor))
       ],
     );
   }

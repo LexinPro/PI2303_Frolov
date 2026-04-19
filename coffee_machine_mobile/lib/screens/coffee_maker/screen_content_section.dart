@@ -4,6 +4,10 @@ import 'package:coffee_machine_mobile/widgets/current_money.dart';
 
 
 class ScreenContentSection extends StatelessWidget {
+  final int cash;
+
+  const ScreenContentSection({super.key, required this.cash});
+
   @override
   Widget build(BuildContext context) {
     return ContentSection(
@@ -15,7 +19,7 @@ class ScreenContentSection extends StatelessWidget {
             fontSize: 32
           ),
         ),
-        CurrentMoney()
+        CurrentMoney(cash: cash)
       ]
     );
   }

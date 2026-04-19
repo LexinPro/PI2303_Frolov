@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
-import 'widgets/tab_button.dart';
+import 'package:coffee_machine_mobile/widgets/tab_button.dart';
+import 'package:coffee_machine_mobile/screens/coffee_maker/coffee_maker_screen.dart';
+import 'package:coffee_machine_mobile/screens/set_resources/set_resources_screen.dart';
+import 'package:coffee_machine_mobile/services/Machine.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  final machine = Machine();
+  machine.fillResources(coffeeBeans: 300);
+
+  runApp(MyApp(machine: machine));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Machine machine;
+
+  const MyApp({super.key, required this.machine});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Coffee Machine',
-      home: const HomePage(),
+      home: HomePage(machine: machine),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Machine machine;
+
+  const HomePage({super.key, required this.machine});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -26,6 +36,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final machine = widget.machine;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -40,6 +52,12 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        body: TabBarView(
+          children: [
+            CoffeeMakerScreen(machine: machine),
+            SetResourcesScreen(machine: machine),
+          ],
+        )
       )
     );
   }
