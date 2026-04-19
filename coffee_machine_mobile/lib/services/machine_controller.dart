@@ -13,7 +13,7 @@ import "dart:io";
 
 
 class MachineController {
-    AsyncMethods process = AsyncMethods();
+    AsyncMethods process = AsyncMethods(onMessage: print);
     final Machine machine;
     final MachineView view = MachineView();
 

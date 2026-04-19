@@ -20,13 +20,19 @@ class Machine {
     );
 
     bool isAvailable(ICoffee coffee) {
-        return _resources.coffeeBeans >= coffee.coffeeBeans() && _resources.milk >= coffee.milk() && _resources.water >= coffee.water();
+        return (
+          _resources.coffeeBeans >= coffee.coffeeBeans() &&
+          _resources.milk >= coffee.milk() &&
+          _resources.water >= coffee.water() &&
+          _resources.cash >= coffee.cash()
+        );
     }
 
     void _makeCoffee(ICoffee coffee) {
         _resources.coffeeBeans -= coffee.coffeeBeans();
         _resources.milk -= coffee.milk();
         _resources.water -= coffee.water();
+        _resources.cash -= coffee.cash();
     }
 
     void makeCoffeeByType(ICoffee coffee) {

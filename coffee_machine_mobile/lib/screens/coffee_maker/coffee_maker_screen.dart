@@ -1,3 +1,4 @@
+import 'package:coffee_machine_mobile/screens/coffee_maker/coffee_choice_container.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_machine_mobile/widgets/info_section.dart';
 import 'package:coffee_machine_mobile/screens/coffee_maker/screen_content_section.dart';
@@ -37,11 +38,7 @@ class _CoffeeMakerScreenState extends State<CoffeeMakerScreen> {
             ScreenContentSection(cash: resources.cash)
           ],
         ),
-        ElevatedButton(onPressed: () { 
-          setState(() {
-            controller.machine.fillResources(cash: 50);
-          });
-        }, child: Text("Добавить деньги"))
+        CoffeeChoiceContainer(machine: widget.machine, onUpdate: () {setState(() {});})
       ],
     );
   }

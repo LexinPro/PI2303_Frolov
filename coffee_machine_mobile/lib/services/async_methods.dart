@@ -1,25 +1,29 @@
 class AsyncMethods {
-    Future<void> heatWater() async {
-        print("Начало нагрева воды");
-        await Future.delayed(Duration(seconds: 3));
-        print("Вода закипела");
-    }
+  final void Function(String) onMessage;
 
-    Future<void> brewCoffee() async {
-        print("Начало заваривания кофе");
-        await Future.delayed(Duration(seconds: 5));
-        print("Кофе заварен");
-    }
+  const AsyncMethods({required this.onMessage});
 
-    Future<void> beatMilk() async {
-        print("Начало взбивания молока");
-        await Future.delayed(Duration(seconds: 5));
-        print("Молоко взбенено");
-    }
+  Future<void> heatWater() async {
+    onMessage("Нагрев воды");
+    await Future.delayed(const Duration(seconds: 3));
+    onMessage("Вода закипела");
+  }
 
-    Future<void> mix() async {
-        print("Начало смешивания кофе с молоком");
-        await Future.delayed(Duration(seconds: 3));
-        print("Кофе и молоко смешены");
-    }
+  Future<void> brewCoffee() async {
+    onMessage("Заваривание кофе");
+    await Future.delayed(const Duration(seconds: 5));
+    onMessage("Кофе заварен");
+  }
+
+  Future<void> beatMilk() async {
+    onMessage("Начало взбивания молока");
+    await Future.delayed(const Duration(seconds: 5));
+    onMessage("Молоко взбито");
+  }
+
+  Future<void> mix() async {
+    onMessage("Смешивание");
+    await Future.delayed(const Duration(seconds: 3));
+    onMessage("Готово");
+  }
 }

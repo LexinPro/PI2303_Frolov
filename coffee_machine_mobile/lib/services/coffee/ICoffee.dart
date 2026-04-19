@@ -1,7 +1,10 @@
+import 'package:coffee_machine_mobile/services/enums.dart';
+
 abstract class ICoffee {
-    String name();
-    int coffeeBeans();
-    int milk();
-    int water();
-    int cash();
+  CoffeeType type();
+  String name();
+  int coffeeBeans();
+  int milk();
+  int water();
+  int cash();
 }

@@ -1,19 +1,23 @@
 import "package:coffee_machine_mobile/services/coffee/ICoffee.dart";
+import "package:coffee_machine_mobile/services/enums.dart";
 
 
 class Espresso implements ICoffee {
-    @override
-    String name() => "Эспрессо";
+  @override
+  CoffeeType type() => CoffeeType.espresso;
 
-    @override
-    int coffeeBeans() => 50;
-    
-    @override
-    int milk() => 0;
+  @override
+  String name() => "Эспрессо";
 
-    @override
-    int water() => 100;
+  @override
+  int coffeeBeans() => 50;
+  
+  @override
+  int milk() => 0;
 
-    @override
-    int cash() => 250;
+  @override
+  int water() => 100;
+
+  @override
+  int cash() => 250;
 }
