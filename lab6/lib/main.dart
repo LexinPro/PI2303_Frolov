@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lab6/my_form.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Text("")
+      body: MyForm(),
     );
   }
 }
